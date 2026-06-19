@@ -29,7 +29,7 @@ export default function YeniGonderi() {
     setErr(null);
     try {
       await api.createPost(text.trim(), imageUrl || undefined);
-      router.replace('/(tabs)/akis');
+      router.replace('/(tabs)/buradayim');
     } catch (e: any) {
       setErr(e?.message || 'Gönderilemedi');
     } finally {
