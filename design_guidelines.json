@@ -1,0 +1,190 @@
+{
+  "app_name": "Seydişehir Sosyal",
+  "personality": "1 iOS-Native Clean",
+  "personality_one_liner": "A modern, photo-first local city platform that feels native, premium, and warmly rooted in Mediterranean aesthetics.",
+  "color": {
+    "surface": "#F9F8F6",
+    "onSurface": "#1A1A1A",
+    "surfaceSecondary": "#FFFFFF",
+    "onSurfaceSecondary": "#1A1A1A",
+    "surfaceTertiary": "#F0EBE6",
+    "onSurfaceTertiary": "#333333",
+    "surfaceInverse": "#1A1A1A",
+    "onSurfaceInverse": "#FFFFFF",
+    "brand": "#C35235",
+    "brandPrimary": "#C35235",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#DF7A61",
+    "onBrandSecondary": "#FFFFFF",
+    "brandTertiary": "#FCEEEB",
+    "onBrandTertiary": "#C35235",
+    "success": "#3E7D59",
+    "onSuccess": "#FFFFFF",
+    "warning": "#D98C2C",
+    "onWarning": "#FFFFFF",
+    "error": "#B83A3A",
+    "onError": "#FFFFFF",
+    "info": "#4A6C7A",
+    "onInfo": "#FFFFFF",
+    "border": "#E8E4DF",
+    "borderStrong": "#D1CCC5",
+    "divider": "#E8E4DF"
+  },
+  "typography": {
+    "displayFontFamily": "Geist",
+    "textFontFamily": "Geist",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Use iOS-native rhythms with generous padding around content. Avoid tight dashboard layouts; empty space is intentional breathing room.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20,
+    "pill": 999
+  },
+  "shadow_tier": 1,
+  "navigation": "bottom_tabs",
+  "icon_set": "Phosphor",
+  "glassmorphism": {
+    "enabled": true,
+    "do_s": [
+      "Apply to bottom tab bar and sticky top headers when content scrolls behind them.",
+      "Use for floating action buttons (FAB) over a brandTertiary tinted bg.",
+      "Use as an overlay for the weather widget on the home screen hero."
+    ],
+    "dont_s": [
+      "Never apply to form fields or body text regions.",
+      "Do not use on regular list rows or basic cards."
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-glass-effect",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Ana Sayfa (Home)",
+      "purpose": "A dashboard for city life, providing quick access to weather, top categories, and featured local highlights.",
+      "states": {
+        "loading": "Centered spinner",
+        "empty": "Illustration of the city with a welcome message",
+        "error": "Message 'Hava durumu veya içerikler yüklenemedi' with Retry button"
+      },
+      "layout": "Top area: Location header ('Seydişehir') and a large hero Weather Card (landscape photo with glassmorphism overlay). Below: Quick action chips (pill-shaped) for high-traffic items like 'Nöbetçi Eczane'. Followed by a horizontaly scrolling 'Öne Çıkanlar' (Featured News/Events) using large rounded cards. Finally, a 4x2 icon grid for core 'Kategoriler' (using brandTertiary tinted icon containers)."
+    },
+    {
+      "name": "Firmalar (Business Directory)",
+      "purpose": "A categorized directory of local businesses allowing users to easily find, contact, and locate services.",
+      "states": {
+        "loading": "Centered spinner",
+        "empty": "Storefront icon + 'Henüz bu kategoride firma yok' + primary CTA to add business",
+        "error": "Message 'Firmalar yüklenemedi' + Retry button"
+      },
+      "layout": "Sticky top category filter tabs (glassmorphism if scrolling under). Vertical list of business cards. Each card spans full width (minus padding), containing a thumbnail image (left), title, category, and a quick 'Ara' (Call) button."
+    },
+    {
+      "name": "Akış (Social Feed)",
+      "purpose": "Instagram-like vertical social feed for user-generated content, news, and community updates.",
+      "states": {
+        "loading": "Centered spinner",
+        "empty": "Camera icon + 'Henüz gönderi yok, ilk paylaşan siz olun' + 'Gönderi Oluştur' CTA",
+        "error": "Message 'Akış yüklenemedi' + Retry button"
+      },
+      "layout": "Top: horizontally scrolling 'Hikayeler' (Stories) row with circular avatars and brandPrimary borders. Below: Vertical feed of posts. Each post has a header (avatar + username), a full-width edge-to-edge image, action bar (like, comment icons), and minimal text description. Minimal white background between posts."
+    },
+    {
+      "name": "Keşfet (Discover)",
+      "purpose": "A visually engaging masonry or tiled grid exploring popular classifieds (İlanlar), places, and community content.",
+      "states": {
+        "loading": "Centered spinner",
+        "empty": "Magnifying glass icon + 'Keşfedilecek yeni bir şey bulunamadı'",
+        "error": "Message 'İçerikler yüklenemedi' + Retry button"
+      },
+      "layout": "Search bar at the top (surfaceTertiary background). Below, a 2-column grid of varying height cards (masonry feel) showing classifieds items, top events, and recommended user posts."
+    },
+    {
+      "name": "Profil (Profile)",
+      "purpose": "User identity hub showing their posts, followers, and account settings.",
+      "states": {
+        "loading": "Centered spinner",
+        "empty": "Not applicable for profile header, but empty state for posts: 'Henüz fotoğraf paylaşmadınız'",
+        "error": "Message 'Profil yüklenemedi' + Retry button"
+      },
+      "layout": "Top profile header with a cover image (using gradient-to-dark scrim if text overlaps) and circular avatar overlapping the bottom edge. Follower/Following metrics. Tabbed view below for 'Gönderiler' (Grid of user's photos) and 'Kaydedilenler' (Saved items). Settings gear icon in the top right."
+    }
+  ],
+  "images": {
+    "home_hero_weather": {
+      "url": "https://images.pexels.com/photos/31673629/pexels-photo-31673629.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Tree framed by ancient stone archway in İstanbul park, representing Turkish city landscape"
+    },
+    "business_cafe": {
+      "url": "https://images.pexels.com/photos/11288683/pexels-photo-11288683.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "A cozy cafe exterior with a stylish modern facade"
+    },
+    "avatar_1": {
+      "url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxhdXRoZW50aWMlMjBwb3J0cmFpdCUyMHBob3RvZ3JhcGh5fGVufDB8fHx8MTc4MTgyOTU3MXww&ixlib=rb-4.1.0&q=85",
+      "alt": "Smiling woman for user profile avatar"
+    },
+    "avatar_2": {
+      "url": "https://images.unsplash.com/photo-1506863530036-1efeddceb993?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHNlYXJjaHwyfHxhdXRoZW50aWMlMjBwb3J0cmFpdCUyMHBob3RvZ3JhcGh5fGVufDB8fHx8MTc4MTgyOTU3MXww&ixlib=rb-4.1.0&q=85",
+      "alt": "Grayscale portrait for user profile avatar"
+    },
+    "feed_event": {
+      "url": "https://images.pexels.com/photos/24864209/pexels-photo-24864209.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Lively outdoor gathering representing a community event"
+    },
+    "news_newspaper": {
+      "url": "https://images.pexels.com/photos/11782125/pexels-photo-11782125.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Senior man reading a newspaper representing city news"
+    },
+    "pharmacy_icon_bg": {
+      "url": "https://images.unsplash.com/photo-1771315763139-629702d6c49e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDB8MHwxfHNlYXJjaHwxfHxwaGFybWFjeSUyMHN0b3JlJTIwZXh0ZXJpb3J8ZW58MHx8fHwxNzgxODI5NTgyfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Green neon cross sign representing Pharmacy / Nöbetçi Eczane"
+    },
+    "classifieds_shopping": {
+      "url": "https://images.pexels.com/photos/32549954/pexels-photo-32549954.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Modern store display representing classifieds and shopping"
+    }
+  },
+  "haptics": {
+    "events": {
+      "tab_press": "light",
+      "like_post": "medium",
+      "pull_to_refresh": "medium",
+      "button_press": "light"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the iOS-Native Clean aesthetic (Personality 1): Use generous padding, readable Geist typography, and avoid dense dashboard-style clutter.",
+    "BANNED COLORS: Do not use any shades of Blue, Indigo, Violet, or Purple. Stick to the provided warm Terracotta (#C35235) primary theme to evoke a local Mediterranean/Turkish feel.",
+    "MANDATORY SCRIM: Anytime text is placed over an image (e.g., the Home Weather hero card or event cards), apply a vertical linear-gradient scrim (transparent to >=70% surfaceInverse) to ensure WCAG AAA readability.",
+    "For the 16 app categories, do not use bare icons. Place each icon inside a rounded square container tinted with `brandTertiary`, maintaining a premium and organized look.",
+    "Implement an Instagram-style layout for the 'Akış' (Social Feed): utilize full-width imagery for posts, keep metadata compact below the image, and use a minimal white background to let user content shine.",
+    "Ensure touch targets are at least 44x44pt across the app, especially for interaction icons like the 'Like' and 'Comment' buttons on the feed.",
+    "Add subtle haptic feedback for primary actions such as liking a post or switching bottom tabs."
+  ]
+}
