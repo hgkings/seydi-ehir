@@ -3,6 +3,23 @@
 -- Run this in the Supabase SQL Editor (supabase.com → SQL Editor)
 -- =============================================================
 
+-- ── Eski tabloları temizle ───────────────────────────────────
+drop table if exists comments      cascade;
+drop table if exists post_likes    cascade;
+drop table if exists posts         cascade;
+drop table if exists stories       cascade;
+drop table if exists indirimler    cascade;
+drop table if exists is_ilanlari   cascade;
+drop table if exists ilanlar       cascade;
+drop table if exists etkinlikler   cascade;
+drop table if exists haberler      cascade;
+drop table if exists firmalar      cascade;
+drop table if exists eczane        cascade;
+drop table if exists categories    cascade;
+drop table if exists otps          cascade;
+drop table if exists profiles      cascade;
+-- ─────────────────────────────────────────────────────────────
+
 -- profiles (users)
 create table if not exists profiles (
   id             uuid primary key default gen_random_uuid(),
