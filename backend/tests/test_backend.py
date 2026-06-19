@@ -92,12 +92,13 @@ class TestContent:
         assert j["city"] == "Seydişehir"
         assert isinstance(j["temp"], int)
 
-    def test_categories_16(self, client):
+    def test_categories(self, client):
+        # After BiKonya redesign, categories now total 21 with enriched fields
         r = client.get(f"{API}/categories")
         assert r.status_code == 200
         cats = r.json()
-        assert len(cats) == 16
-        assert {"slug", "name", "icon", "color"}.issubset(cats[0].keys())
+        assert len(cats) >= 21
+        assert {"slug", "name", "icon", "color", "group", "subtitle", "bg"}.issubset(cats[0].keys())
 
     def test_firmalar_list_and_filter_and_detail(self, client):
         r = client.get(f"{API}/firmalar")

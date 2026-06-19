@@ -8,13 +8,18 @@ import { colors, spacing, radius, typography, shadow } from '@/constants/theme';
 import { api } from '@/src/api';
 
 const SLUG_TO_TITLE: Record<string, string> = {
-  firmalar: 'Firmalar', haberler: 'Haberler', etkinlikler: 'Etkinlikler',
-  ilanlar: 'İlanlar', 'is-ilanlari': 'İş İlanları', eczane: 'Nöbetçi Eczane',
+  firmalar: 'Hizmet Verenler', haberler: 'Haberler', etkinlikler: 'Etkinlikler',
+  ilanlar: 'Emlak & Araç', 'is-ilanlari': 'İş İlanları', eczane: 'Nöbetçi Eczane',
   indirimler: 'İndirimler', gezilecek: 'Gezilecek Yerler', 'alo-paket': 'Alo Paket',
-  otobus: 'Otobüs Hatları', 'yer-bildirim': 'Yer Bildirimi', itiraflar: 'İtiraflar',
+  otobus: 'Ulaşım', 'yer-bildirim': 'Yer Bildirimi', itiraflar: 'İtiraflar',
   'alo-taksi': 'Alo Taksi', konaklama: 'Konaklama', 'resmi-kurumlar': 'Resmi Kurumlar',
-  anketler: 'Anketler',
+  anketler: 'Anketler', 'yeme-icme': 'Yeme & İçme', 'ikinci-el': 'İkinci El & Alışveriş',
+  piknik: 'Piknik Alanları', noter: 'Nöbetçi Noter', 'kayip-buluntu': 'Kayıp & Buluntu',
+  namaz: 'Namaz Vakitleri',
 };
+
+const FOOD_KATS = ['Restoranlar', 'Kafeler', 'Tatlıcılar'];
+const SECOND_HAND_KATS = ['Elektronik', 'Beyaz Eşya', 'Ev & Yaşam', 'Evcil Hayvan'];
 
 export default function KategoriListesi() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
@@ -27,11 +32,21 @@ export default function KategoriListesi() {
     try {
       let data: any[] = [];
       if (slug === 'firmalar') data = await api.firmalar();
+      else if (slug === 'yeme-icme') {
+        const all = await api.firmalar();
+        data = all.filter((f: any) => FOOD_KATS.includes(f.kategori));
+      }
       else if (slug === 'haberler') data = await api.haberler();
       else if (slug === 'etkinlikler') data = await api.etkinlikler();
       else if (slug === 'ilanlar') data = await api.ilanlar();
+      else if (slug === 'ikinci-el') {
+        const all = await api.ilanlar();
+        data = all.filter((i: any) => SECOND_HAND_KATS.includes(i.kategori));
+      }
       else if (slug === 'is-ilanlari') data = await api.isIlanlari();
       else if (slug === 'eczane') data = await api.eczane();
+      else if (slug === 'indirimler') data = await api.indirimler();
+      else if (slug === 'namaz') { router.replace('/namaz' as any); return; }
       else data = [];
       setItems(data);
     } catch (e) {
@@ -39,12 +54,12 @@ export default function KategoriListesi() {
     } finally {
       setLoading(false);
     }
-  }, [slug]);
+  }, [slug, router]);
 
   useEffect(() => { load(); }, [load]);
 
   const renderItem = ({ item }: any) => {
-    if (slug === 'firmalar') {
+    if (slug === 'firmalar' || slug === 'yeme-icme') {
       return (
         <Pressable style={styles.row} onPress={() => router.push(`/firma/${item.id}` as any)} testID={`firma-${item.id}`}>
           <Image source={{ uri: item.image_url }} style={styles.thumb} contentFit="cover" />
@@ -84,7 +99,7 @@ export default function KategoriListesi() {
         </Pressable>
       );
     }
-    if (slug === 'ilanlar') {
+    if (slug === 'ilanlar' || slug === 'ikinci-el') {
       return (
         <Pressable style={styles.row} onPress={() => router.push(`/ilan/${item.id}` as any)} testID={`ilan-${item.id}`}>
           <Image source={{ uri: item.image_url }} style={styles.thumb} contentFit="cover" />
@@ -94,6 +109,18 @@ export default function KategoriListesi() {
             <Text style={styles.rowMeta} numberOfLines={1}>{item.kategori}</Text>
           </View>
         </Pressable>
+      );
+    }
+    if (slug === 'indirimler') {
+      return (
+        <View style={styles.row} testID={`indirim-${item.id}`}>
+          <Image source={{ uri: item.image_url }} style={styles.thumb} contentFit="cover" />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.rowTitle} numberOfLines={1}>{item.firma_name}</Text>
+            <Text style={styles.rowSub} numberOfLines={1}>{item.title}</Text>
+            <Text style={[styles.priceText, { color: '#D98C2C' }]}>%{item.discount_pct} indirim</Text>
+          </View>
+        </View>
       );
     }
     if (slug === 'is-ilanlari') {

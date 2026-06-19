@@ -171,27 +171,113 @@ async def weather():
 # ============================ CATEGORIES ============================
 
 CATEGORIES = [
-    {"slug": "firmalar", "name": "Firmalar", "icon": "storefront-outline", "color": "#C35235"},
-    {"slug": "haberler", "name": "Haberler", "icon": "newspaper-outline", "color": "#DF7A61"},
-    {"slug": "etkinlikler", "name": "Etkinlikler", "icon": "calendar-outline", "color": "#3E7D59"},
-    {"slug": "ilanlar", "name": "İlanlar", "icon": "pricetags-outline", "color": "#D98C2C"},
-    {"slug": "eczane", "name": "Nöbetçi Eczane", "icon": "medkit-outline", "color": "#B83A3A"},
-    {"slug": "is-ilanlari", "name": "İş İlanları", "icon": "briefcase-outline", "color": "#4A6C7A"},
-    {"slug": "indirimler", "name": "İndirimler", "icon": "ticket-outline", "color": "#C35235"},
-    {"slug": "gezilecek", "name": "Gezilecek Yerler", "icon": "map-outline", "color": "#3E7D59"},
-    {"slug": "alo-paket", "name": "Alo Paket", "icon": "bicycle-outline", "color": "#DF7A61"},
-    {"slug": "otobus", "name": "Otobüs Hatları", "icon": "bus-outline", "color": "#4A6C7A"},
-    {"slug": "yer-bildirim", "name": "Yer Bildirimi", "icon": "location-outline", "color": "#D98C2C"},
-    {"slug": "itiraflar", "name": "İtiraflar", "icon": "chatbox-outline", "color": "#B83A3A"},
-    {"slug": "alo-taksi", "name": "Alo Taksi", "icon": "car-outline", "color": "#1A1A1A"},
-    {"slug": "konaklama", "name": "Konaklama", "icon": "bed-outline", "color": "#3E7D59"},
-    {"slug": "resmi-kurumlar", "name": "Resmi Kurumlar", "icon": "business-outline", "color": "#4A6C7A"},
-    {"slug": "anketler", "name": "Anketler", "icon": "stats-chart-outline", "color": "#C35235"},
+    # Günlük ihtiyaçlar
+    {"slug": "eczane", "name": "Nöbetçi Eczane", "subtitle": "Bugün nöbetçi eczaneler", "icon": "medkit", "color": "#B83A3A", "bg": "#FBE7E7", "group": "Günlük ihtiyaçlar"},
+    {"slug": "otobus", "name": "Ulaşım", "subtitle": "Otobüs hatları ve ulaşım bilgileri", "icon": "bus", "color": "#2F7DD1", "bg": "#E3EEFB", "group": "Günlük ihtiyaçlar"},
+    {"slug": "namaz", "name": "Namaz Vakitleri", "subtitle": "Seydişehir için günlük vakitler", "icon": "moon", "color": "#1F7A4D", "bg": "#DFF3E6", "group": "Günlük ihtiyaçlar"},
+    {"slug": "alo-taksi", "name": "Alo Taksi", "subtitle": "Taksi / Alo Taksi", "icon": "car-sport", "color": "#D9A82C", "bg": "#FFF6DC", "group": "Günlük ihtiyaçlar"},
+    # Şehir gündemi
+    {"slug": "haberler", "name": "Haberler", "subtitle": "Şehirden son haberler", "icon": "newspaper", "color": "#2F7DD1", "bg": "#E3EEFB", "group": "Şehir gündemi"},
+    {"slug": "etkinlikler", "name": "Etkinlikler", "subtitle": "Konser, spor ve kültür etkinlikleri", "icon": "calendar", "color": "#7E3FB7", "bg": "#F0E5F8", "group": "Şehir gündemi"},
+    {"slug": "yeme-icme", "name": "Yeme & İçme", "subtitle": "Restoran, kafe ve lezzet noktaları", "icon": "restaurant", "color": "#C35235", "bg": "#FCEEEB", "group": "Şehir gündemi"},
+    # İlan, alışveriş ve fırsatlar
+    {"slug": "ilanlar", "name": "Emlak & Araç", "subtitle": "Satılık ve kiralık emlak ile araç ilanları", "icon": "megaphone", "color": "#D98C2C", "bg": "#FFF1D6", "group": "İlan, alışveriş ve fırsatlar"},
+    {"slug": "ikinci-el", "name": "İkinci El & Alışveriş", "subtitle": "İkinci el ürün ilanları", "icon": "bag-handle", "color": "#C35235", "bg": "#FCEEEB", "group": "İlan, alışveriş ve fırsatlar"},
+    {"slug": "indirimler", "name": "İndirimler", "subtitle": "İşletme indirimleri ve kampanyalar", "icon": "pricetag", "color": "#D98C2C", "bg": "#FFF1D6", "group": "İlan, alışveriş ve fırsatlar"},
+    {"slug": "is-ilanlari", "name": "İş İlanları", "subtitle": "Açık pozisyonlar ve iş fırsatları", "icon": "briefcase", "color": "#4A6CD9", "bg": "#E5EAFB", "group": "İlan, alışveriş ve fırsatlar"},
+    {"slug": "kayip-buluntu", "name": "Kayıp & Buluntu", "subtitle": "Kaybolan ve bulunan eşyalar", "icon": "search", "color": "#E16D8A", "bg": "#FCE4EC", "group": "İlan, alışveriş ve fırsatlar"},
+    # Şehir & yaşam
+    {"slug": "gezilecek", "name": "Gezilecek Yerler", "subtitle": "Müze, park ve gezi noktaları", "icon": "map", "color": "#3E7D59", "bg": "#DFF3E6", "group": "Şehir & yaşam"},
+    {"slug": "piknik", "name": "Piknik Alanları", "subtitle": "Piknik ve mesire alanları", "icon": "leaf", "color": "#3E7D59", "bg": "#DFF3E6", "group": "Şehir & yaşam"},
+    {"slug": "konaklama", "name": "Konaklama", "subtitle": "Otel, pansiyon ve konuk evleri", "icon": "bed", "color": "#2F7DD1", "bg": "#E3EEFB", "group": "Şehir & yaşam"},
+    {"slug": "alo-paket", "name": "Alo Paket", "subtitle": "Eve gelen restoran servisi", "icon": "bicycle", "color": "#DF7A61", "bg": "#FCEEEB", "group": "Şehir & yaşam"},
+    # Hizmetler
+    {"slug": "firmalar", "name": "Hizmet Verenler", "subtitle": "Usta, tamirci ve hizmet sağlayıcılar", "icon": "construct", "color": "#E16D8A", "bg": "#FCE4EC", "group": "Hizmetler"},
+    {"slug": "noter", "name": "Nöbetçi Noter", "subtitle": "Nöbetçi noter listesi", "icon": "document-text", "color": "#6D7AD9", "bg": "#E5EAFB", "group": "Hizmetler"},
+    {"slug": "resmi-kurumlar", "name": "Resmi Kurumlar", "subtitle": "Belediye, hastane, devlet daireleri", "icon": "business", "color": "#4A6C7A", "bg": "#E5EBF0", "group": "Hizmetler"},
+    # Sosyal
+    {"slug": "itiraflar", "name": "İtiraflar", "subtitle": "Anonim itiraflar", "icon": "chatbox-ellipses", "color": "#E16D8A", "bg": "#FCE4EC", "group": "Sosyal"},
+    {"slug": "anketler", "name": "Anketler", "subtitle": "Şehir anketleri", "icon": "stats-chart", "color": "#7E3FB7", "bg": "#F0E5F8", "group": "Sosyal"},
 ]
+
+
+def _service_card_image(slug: str) -> str:
+    return {
+        "haberler": "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800",
+        "etkinlikler": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800",
+        "yeme-icme": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800",
+        "ilanlar": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800",
+        "ikinci-el": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800",
+        "indirimler": "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800",
+    }.get(slug, "")
+
 
 @api_router.get("/categories")
 async def get_categories():
-    return CATEGORIES
+    # Add counts for some categories
+    counts = {
+        "haberler": await db.haberler.count_documents({}),
+        "etkinlikler": await db.etkinlikler.count_documents({}),
+        "ilanlar": await db.ilanlar.count_documents({}),
+        "is-ilanlari": await db.is_ilanlari.count_documents({}),
+        "yeme-icme": await db.firmalar.count_documents({"kategori": {"$in": ["Restoranlar", "Kafeler", "Tatlıcılar"]}}),
+        "indirimler": await db.indirimler.count_documents({}),
+        "ikinci-el": await db.ilanlar.count_documents({"kategori": {"$in": ["Elektronik", "Beyaz Eşya", "Ev & Yaşam", "Evcil Hayvan"]}}),
+        "firmalar": await db.firmalar.count_documents({}),
+    }
+    out = []
+    for c in CATEGORIES:
+        item = {**c, "count": counts.get(c["slug"], 0), "image_url": _service_card_image(c["slug"])}
+        out.append(item)
+    return out
+
+
+# ============================ NAMAZ VAKITLERI ============================
+
+@api_router.get("/namaz")
+async def namaz_vakitleri():
+    # Mock prayer times for Seydişehir
+    now = datetime.now(timezone.utc)
+    times = [
+        {"name": "İmsak", "time": "03:31", "ts": "03:31"},
+        {"name": "Güneş", "time": "05:20", "ts": "05:20"},
+        {"name": "Öğle", "time": "12:56", "ts": "12:56"},
+        {"name": "İkindi", "time": "16:49", "ts": "16:49"},
+        {"name": "Akşam", "time": "20:22", "ts": "20:22"},
+        {"name": "Yatsı", "time": "22:03", "ts": "22:03"},
+    ]
+    # Find next prayer based on current hour
+    cur_min = now.hour * 60 + now.minute
+    next_idx = 0
+    next_remaining = ""
+    for i, t in enumerate(times):
+        h, m = map(int, t["time"].split(":"))
+        tmin = h * 60 + m
+        if tmin > cur_min:
+            next_idx = i
+            diff = tmin - cur_min
+            next_remaining = f"{diff}dk" if diff < 60 else f"{diff // 60}sa {diff % 60}dk"
+            break
+    else:
+        next_idx = 0
+        next_remaining = "yarın"
+    return {
+        "city": "Seydişehir",
+        "date": now.date().isoformat(),
+        "times": times,
+        "next_index": next_idx,
+        "next_name": times[next_idx]["name"],
+        "next_time": times[next_idx]["time"],
+        "next_in": next_remaining,
+    }
+
+
+# ============================ İNDİRİMLER ============================
+
+@api_router.get("/indirimler")
+async def list_indirimler():
+    items = await db.indirimler.find({}, {"_id": 0}).sort("created_at", -1).to_list(200)
+    return items
 
 
 # ============================ FIRMALAR ============================
@@ -288,7 +374,7 @@ async def list_stories():
 # ============================ POSTS / FEED ============================
 
 @api_router.get("/posts")
-async def list_posts(authorization: Optional[str] = Header(None)):
+async def list_posts(sort: Optional[str] = "latest", authorization: Optional[str] = Header(None)):
     user_id = None
     if authorization:
         try:
@@ -296,7 +382,8 @@ async def list_posts(authorization: Optional[str] = Header(None)):
             user_id = u["id"]
         except HTTPException:
             pass
-    items = await db.posts.find({}, {"_id": 0}).sort("created_at", -1).to_list(200)
+    sort_field = ("like_count", -1) if sort == "trend" else ("created_at", -1)
+    items = await db.posts.find({}, {"_id": 0}).sort(*sort_field).to_list(200)
     if user_id:
         for p in items:
             p["liked_by_me"] = user_id in p.get("liked_by", [])
@@ -676,9 +763,41 @@ async def seed_data():
     logger.info("Mock data seed complete.")
 
 
+async def seed_indirimler():
+    if await db.indirimler.count_documents({}) > 0:
+        return
+    items = [
+        ("Fest Teknik", "HER ZAMAN EN UYGUN", "Beyaz eşya servisinde özel kampanya", 17, "2026-06-10",
+         "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900"),
+        ("Pile Plise", "25 Özel", "Perde sistemlerinde indirim", 5, "2026-06-30",
+         "https://images.unsplash.com/photo-1513161455079-7dc1de15ef3e?w=900"),
+        ("Pile Plise", "Yaza Merhaba", "Yaz koleksiyonu kampanyası", 5, "2026-06-30",
+         "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=900"),
+        ("Karadeniz Pastanesi", "Hafta Sonu Tatlısı", "Tüm pastalarda %10 indirim", 10, "2026-07-15",
+         "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=900"),
+        ("Mavi Köşe Cafe", "Kahve Saati", "16:00-18:00 arası kahveler %20", 20, "2026-08-01",
+         "https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900"),
+        ("Berra Butik", "Sezon Sonu", "Tüm kıyafetlerde %30'a varan indirim", 30, "2026-07-30",
+         "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900"),
+    ]
+    for name, title, desc, oran, son, img in items:
+        await db.indirimler.insert_one({
+            "id": str(uuid.uuid4()),
+            "firma_name": name,
+            "title": title,
+            "description": desc,
+            "discount_pct": oran,
+            "valid_until": son,
+            "image_url": img,
+            "created_at": now_iso(),
+        })
+    logger.info("İndirimler seed complete.")
+
+
 @app.on_event("startup")
 async def startup_event():
     await seed_data()
+    await seed_indirimler()
 
 
 @app.on_event("shutdown")

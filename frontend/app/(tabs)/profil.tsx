@@ -52,7 +52,7 @@ export default function Profil() {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']} testID="profile-screen">
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xl }}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
         <View style={styles.topBar}>
           <Text style={styles.username}>@{user.username}</Text>
           <Pressable hitSlop={8} testID="profile-settings-btn" onPress={signOut}>

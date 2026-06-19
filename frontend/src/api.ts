@@ -49,6 +49,8 @@ export const api = {
   // Content
   categories: () => request<any[]>('/categories'),
   weather: () => request<any>('/weather'),
+  namaz: () => request<any>('/namaz'),
+  indirimler: () => request<any[]>('/indirimler'),
   firmalar: (kategori?: string) =>
     request<any[]>(`/firmalar${kategori ? `?kategori=${encodeURIComponent(kategori)}` : ''}`),
   firma: (id: string) => request<any>(`/firmalar/${id}`),
@@ -61,7 +63,7 @@ export const api = {
   isIlanlari: () => request<any[]>('/is-ilanlari'),
   eczane: () => request<any[]>('/eczane'),
   stories: () => request<any[]>('/stories'),
-  posts: () => request<any[]>('/posts'),
+  posts: (sort: 'latest' | 'trend' = 'latest') => request<any[]>(`/posts?sort=${sort}`),
   createPost: (text: string, image_url?: string) =>
     request<any>('/posts', { method: 'POST', body: JSON.stringify({ text, image_url }) }),
   toggleLike: (postId: string) =>
