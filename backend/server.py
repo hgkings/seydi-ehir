@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
+from prayer_times import as_list as compute_prayer_times
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -234,42 +235,46 @@ async def get_categories():
 
 # ============================ NAMAZ VAKITLERI ============================
 
-@api_router.get("/namaz")
-async def namaz_vakitleri():
-    # Mock prayer times for Seydişehir
-    now = datetime.now(timezone.utc)
-    times = [
-        {"name": "İmsak", "time": "03:31", "ts": "03:31"},
-        {"name": "Güneş", "time": "05:20", "ts": "05:20"},
-        {"name": "Öğle", "time": "12:56", "ts": "12:56"},
-        {"name": "İkindi", "time": "16:49", "ts": "16:49"},
-        {"name": "Akşam", "time": "20:22", "ts": "20:22"},
-        {"name": "Yatsı", "time": "22:03", "ts": "22:03"},
-    ]
-    # Find next prayer based on current hour
-    cur_min = now.hour * 60 + now.minute
+def _build_namaz_response(times: list, date_str: str) -> dict:
+    import datetime as _dt
+    now_local = _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=3)))
+    cur_min = now_local.hour * 60 + now_local.minute
     next_idx = 0
-    next_remaining = ""
+    next_remaining = "yarın"
     for i, t in enumerate(times):
         h, m = map(int, t["time"].split(":"))
-        tmin = h * 60 + m
-        if tmin > cur_min:
+        if h * 60 + m > cur_min:
             next_idx = i
-            diff = tmin - cur_min
+            diff = h * 60 + m - cur_min
             next_remaining = f"{diff}dk" if diff < 60 else f"{diff // 60}sa {diff % 60}dk"
             break
-    else:
-        next_idx = 0
-        next_remaining = "yarın"
     return {
         "city": "Seydişehir",
-        "date": now.date().isoformat(),
+        "date": date_str,
         "times": times,
         "next_index": next_idx,
         "next_name": times[next_idx]["name"],
         "next_time": times[next_idx]["time"],
         "next_in": next_remaining,
     }
+
+
+@api_router.get("/namaz")
+async def namaz_vakitleri():
+    import datetime as _dt
+    now_local = _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=3)))
+    date_str = now_local.date().isoformat()
+
+    # Günlük cache — gün değişince yeniden hesapla
+    cached = await db.namaz_cache.find_one({"date": date_str}, {"_id": 0})
+    if cached:
+        return _build_namaz_response(cached["times"], date_str)
+
+    times = compute_prayer_times(now_local.date())
+    await db.namaz_cache.delete_many({})
+    await db.namaz_cache.insert_one({"date": date_str, "times": times})
+
+    return _build_namaz_response(times, date_str)
 
 
 # ============================ İNDİRİMLER ============================
