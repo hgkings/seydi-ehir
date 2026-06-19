@@ -182,10 +182,17 @@ create table if not exists categories (
 );
 
 -- =============================================================
--- Grant anon access (RLS is disabled by default on new tables)
+-- Grant anon access
 -- =============================================================
 grant select, insert, update, delete on all tables in schema public to anon;
 grant usage on schema public to anon;
+
+-- =============================================================
+-- RLS Policies (custom phone auth – anon key used for all ops)
+-- =============================================================
+alter table profiles enable row level security;
+drop policy if exists "profiles_anon_all" on profiles;
+create policy "profiles_anon_all" on profiles for all to anon using (true) with check (true);
 
 -- =============================================================
 -- Seed Data
